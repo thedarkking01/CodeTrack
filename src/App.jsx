@@ -110,7 +110,7 @@ import dsaProblems from "../src/components/dsaProblems"; // Import the dsaProble
 const Home = () => {
   return (
     <Box textAlign="center" p={4}>
-      <h1>Welcome to the Code Playground</h1>
+      <h1>Welcome to the CheapCode</h1>
       <p>Click the button below to start coding!</p>
       <Link to="/code-editor">
         <Box
