@@ -106,10 +106,15 @@ import { Box, Table, Thead, Tbody, Tr, Th, Td } from "@chakra-ui/react";
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom"; 
 import CodeEditor from "./components/CodeEditor";
 import dsaProblems from "../src/components/dsaProblems"; // Import the dsaProblems array
+import Navbar from "./components/Navbar";
+
 
 const Home = () => {
   return (
+    <>
+    <Navbar/>
     <Box textAlign="center" p={4}>
+      
       <h1>Welcome to the CheapCode</h1>
       <p>Click the button below to start coding!</p>
       <Link to="/code-editor">
@@ -162,6 +167,7 @@ const Home = () => {
         </Table>
       </Box>
     </Box>
+    </>
   );
 };
 
@@ -175,6 +181,7 @@ function App() {
         </Routes>
       </Box>
     </Router>
+    
   );
 }
 

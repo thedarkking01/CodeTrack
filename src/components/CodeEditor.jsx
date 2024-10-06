@@ -1,5 +1,9 @@
-// import { useRef, useState } from "react";
-// import { Box, VStack, HStack, Textarea, Tabs, TabList, TabPanels, Tab, TabPanel } from "@chakra-ui/react";
+
+
+
+// import { useRef, useState, useEffect } from "react";
+// import { useLocation, useNavigate } from "react-router-dom";
+// import { Box, VStack, HStack, Tabs, TabPanels, TabPanel, TabList, Tab, Text } from "@chakra-ui/react";
 // import { Editor } from "@monaco-editor/react";
 // import LanguageSelector from "./LanguageSelector";
 // import { CODE_SNIPPETS } from "../constants";
@@ -9,8 +13,79 @@
 //   const editorRef = useRef();
 //   const [value, setValue] = useState("");
 //   const [language, setLanguage] = useState("javascript");
-//   const [problemStatement, setProblemStatement] = useState("Enter the problem statement here...");
-  
+//   const [problemStatement, setProblemStatement] = useState("Read the problem statement here...");
+//   const [problemName, setProblemName] = useState("");
+//   const [tabSwitchMessage, setTabSwitchMessage] = useState(""); // For displaying message on tab switching
+//   const navigate = useNavigate();
+//   const location = useLocation();
+//   const { problem } = location.state || { problem: null };
+
+//   useEffect(() => {
+//     // Check if the user already reloaded the page
+//     const wasReloaded = localStorage.getItem("wasReloaded");
+
+//     if (wasReloaded) {
+//       // If the page was reloaded, mark it and force redirect if tab switching happens
+//       alert("Page reload detected, you will be redirected to homepage on tab switch.");
+//       localStorage.removeItem("wasReloaded");
+//     }
+
+//     // Redirect to homepage if page is reloaded
+//     const handleBeforeUnload = (event) => {
+//       event.preventDefault();
+//       localStorage.setItem("wasReloaded", "true");
+//     };
+
+//     window.addEventListener("beforeunload", handleBeforeUnload);
+
+//     if (problem) {
+//       setProblemStatement(problem.statement);
+//       setProblemName(problem.name);
+//     }
+
+//     // Request full-screen mode
+//     const enterFullScreen = () => {
+//       const element = document.documentElement;
+//       if (!document.fullscreenElement) {
+//         element.requestFullscreen().catch((err) => {
+//           console.error("Error attempting to enable full-screen mode:", err.message);
+//         });
+//       }
+//     };
+
+//     enterFullScreen();
+
+//     // Handle full-screen exit event
+//     const handleFullScreenChange = () => {
+//       if (!document.fullscreenElement) {
+//         alert("You exited full-screen mode. Returning to the homepage.");
+//         navigate("/");
+//       }
+//     };
+
+//     document.addEventListener("fullscreenchange", handleFullScreenChange);
+
+//     // Detect tab switching or page visibility change
+//     const handleVisibilityChange = () => {
+//       if (document.hidden) {
+//         setTabSwitchMessage("Tab switching is not allowed while working in the code editor.");
+//         alert("Tab switching is not allowed, returning to homepage.");
+//         navigate("/"); // Redirect to homepage on tab switch
+//       } else {
+//         setTabSwitchMessage("");
+//       }
+//     };
+
+//     document.addEventListener("visibilitychange", handleVisibilityChange);
+
+//     // Clean up event listeners
+//     return () => {
+//       window.removeEventListener("beforeunload", handleBeforeUnload);
+//       document.removeEventListener("fullscreenchange", handleFullScreenChange);
+//       document.removeEventListener("visibilitychange", handleVisibilityChange);
+//     };
+//   }, [problem, navigate]);
+
 //   const onMount = (editor) => {
 //     editorRef.current = editor;
 //     editor.focus();
@@ -22,19 +97,31 @@
 //   };
 
 //   return (
-//     <Box height="100%"  bg="gray.100">
-//       {/* Main Layout */}
+//     <Box height="100%" bg="gray.100">
 //       <HStack spacing={4} height="100%" bg={"black"}>
-        
 //         {/* Left Section: Problem Statement */}
 //         <Box w="50%" p={4} bg="black" borderRadius="md" boxShadow="md">
-//           <Textarea
-//             value={problemStatement}
-//             onChange={(e) => setProblemStatement(e.target.value)}
+//           <Box textColor="white" fontSize="24px" mb={4} fontWeight="bold">
+//             {problemName || "Problem Name"}
+//           </Box>
+//           <Box
 //             height="100%"
-//             placeholder="Problem statement here..."
-//             bg="gray.50"
-//           />
+//             textColor="white"
+//             fontSize="17px"
+//             fontFamily="monospace"
+//             minHeight="732px"
+//             overflow="auto"
+//             bg="gray.800"
+//             borderRadius="md"
+//             p={4}
+//             whiteSpace="pre-wrap"
+//             style={{
+//               userSelect: "none",
+//               lineHeight: "1.6",
+//             }}
+//           >
+//             {problemStatement}
+//           </Box>
 //         </Box>
 
 //         {/* Right Section: Code Editor and Output */}
@@ -59,115 +146,9 @@
 //           {/* Tabs for Test Cases and Output */}
 //           <Tabs w="100%" height="100%" variant="enclosed" bg="black" borderRadius="md" boxShadow="md">
 //             {/* <TabList>
-//               <Tab>Testcase 1</Tab>
-//               <Tab>Testcase 2</Tab>
+//               <Tab>Test Cases</Tab>
+//               <Tab>Output</Tab>
 //             </TabList> */}
-
-//             <TabPanels>
-//               <TabPanel>
-//                 {/* Example test case input */}
-//                 <Box>
-//                   {/* <Textarea
-//                     placeholder="Enter inputs for test case 1..."
-//                     bg="gray.50"
-//                     mb={4}
-//                   /> */}
-//                   <Output editorRef={editorRef} language={language} />
-//                 </Box>
-//               </TabPanel>
-//               <TabPanel>
-//                 {/* Example test case input */}
-//                 <Box>
-//                   {/* <Textarea
-//                     placeholder="Enter inputs for test case 2..."
-//                     bg="gray.50"
-//                     mb={4}
-//                   /> */}
-//                   <Output editorRef={editorRef} language={language} />
-//                 </Box>
-//               </TabPanel>
-//             </TabPanels>
-//           </Tabs>
-//         </VStack>
-//       </HStack>
-//     </Box>
-//   );
-// };
-// export default CodeEditor;
-
-// import { useRef, useState, useEffect } from "react";
-// import { useLocation } from "react-router-dom";
-// import { Box, VStack, HStack, Textarea, Tabs, TabPanels, Tab, TabPanel } from "@chakra-ui/react";
-// import { Editor } from "@monaco-editor/react";
-// import LanguageSelector from "./LanguageSelector";
-// import { CODE_SNIPPETS } from "../constants";
-// import Output from "./Output";
-
-// const CodeEditor = () => {
-//   const editorRef = useRef();
-//   const [value, setValue] = useState("");
-//   const [language, setLanguage] = useState("javascript");
-//   const [problemStatement, setProblemStatement] = useState("Enter the problem statement here...");
-  
-//   // Get the location object from React Router
-//   const location = useLocation();
-//   const { problem } = location.state || { problem: null }; // Get the problem from state
-
-//   // Use an effect to set the problem statement when the component mounts
-//   useEffect(() => {
-//     if (problem) {
-//       setProblemStatement(problem.statement); // Set the problem statement received from homepage
-//     }
-//   }, [problem]);
-
-//   const onMount = (editor) => {
-//     editorRef.current = editor;
-//     editor.focus();
-//   };
-
-//   const onSelect = (language) => {
-//     setLanguage(language);
-//     setValue(CODE_SNIPPETS[language]);
-//   };
-
-//   return (
-//     <Box height="100%" bg="gray.100">
-//       {/* Main Layout */}
-//       <HStack spacing={4} height="100%" bg={"black"}>
-        
-//         {/* Left Section: Problem Statement */}
-//         <Box w="50%" p={4} bg="black" borderRadius="md" boxShadow="md">
-//           <Textarea
-//             value={problemStatement}
-//             onChange={(e) => setProblemStatement(e.target.value)}
-//             height="100%"
-//             placeholder="Problem statement here..."
-//             bg="gray.50"
-//             isReadOnly // Make it read-only since we want to display the statement
-//           />
-//         </Box>
-
-//         {/* Right Section: Code Editor and Output */}
-//         <VStack w="50%" spacing={4} height="100%">
-//           {/* Code Editor */}
-//           <Box w="100%" bg="black" borderRadius="md" boxShadow="md" flexGrow={1}>
-//             <LanguageSelector language={language} onSelect={onSelect} />
-//             <Editor
-//               options={{
-//                 minimap: { enabled: false },
-//               }}
-//               height="50vh"
-//               theme="vs-dark"
-//               language={language}
-//               defaultValue={CODE_SNIPPETS[language]}
-//               onMount={onMount}
-//               value={value}
-//               onChange={(value) => setValue(value)}
-//             />
-//           </Box>
-
-//           {/* Tabs for Test Cases and Output */}
-//           <Tabs w="100%" height="100%" variant="enclosed" bg="black" borderRadius="md" boxShadow="md">
 //             <TabPanels>
 //               <TabPanel>
 //                 <Box>
@@ -181,6 +162,13 @@
 //               </TabPanel>
 //             </TabPanels>
 //           </Tabs>
+
+//           {/* Tab Switch Message */}
+//           {tabSwitchMessage && (
+//             <Text color="red" fontSize="18px" fontWeight="bold">
+//               {tabSwitchMessage}
+//             </Text>
+//           )}
 //         </VStack>
 //       </HStack>
 //     </Box>
@@ -188,191 +176,62 @@
 // };
 
 // export default CodeEditor;
-
-
-
-
-
-
-
-
-
-
-
-// import { useRef, useState, useEffect } from "react";
-// import { useLocation, useNavigate } from "react-router-dom";
-// import { Box, VStack, HStack, Textarea, Tabs, TabPanels, TabPanel } from "@chakra-ui/react";
-// import { Editor } from "@monaco-editor/react";
-// import LanguageSelector from "./LanguageSelector";
-// import { CODE_SNIPPETS } from "../constants";
-// import Output from "./Output";
-
-// const CodeEditor = () => {
-//   const editorRef = useRef();
-//   const [value, setValue] = useState("");
-//   const [language, setLanguage] = useState("javascript");
-//   const [problemStatement, setProblemStatement] = useState("Enter the problem statement here...");
-//   const [problemName, setProblemName] = useState("");
-
-//   const location = useLocation();
-//   const navigate = useNavigate();
-//   const { problem } = location.state || { problem: null };
-
-//   // Automatically enter full-screen mode on page load or refresh
-//   useEffect(() => {
-//     if (problem) {
-//       setProblemStatement(problem.statement); // Set the problem statement
-//       setProblemName(problem.name); // Set the problem name
-//     }
-
-//     // Function to request full-screen mode
-//     const enterFullScreen = () => {
-//       const element = document.documentElement; // Full-screen the entire page
-//       if (!document.fullscreenElement) {
-//         element.requestFullscreen().catch((err) => {
-//           console.error("Error attempting to enable full-screen mode:", err.message);
-//         });
-//       }
-//     };
-
-//     // Re-trigger full-screen mode on page load (or refresh)
-//     if (!document.fullscreenElement) {
-//       enterFullScreen();
-//     }
-
-//     // Handle full-screen exit (redirect to homepage)
-//     const handleFullScreenChange = () => {
-//       if (!document.fullscreenElement) {
-//         // User has exited full-screen mode, show alert and redirect
-//         alert("You exited full-screen mode. Returning to the homepage.");
-//         navigate("/");
-//       }
-//     };
-
-//     // Add event listener for full-screen changes
-//     document.addEventListener("fullscreenchange", handleFullScreenChange);
-
-//     return () => {
-//       // Clean up the event listener when the component unmounts
-//       document.removeEventListener("fullscreenchange", handleFullScreenChange);
-//     };
-//   }, [problem, navigate]);
-
-//   const onMount = (editor) => {
-//     editorRef.current = editor;
-//     editor.focus();
-//   };
-
-//   const onSelect = (language) => {
-//     setLanguage(language);
-//     setValue(CODE_SNIPPETS[language]);
-//   };
-
-//   return (
-//     <Box height="100%" bg="gray.100">
-//       <HStack spacing={4} height="100%" bg={"black"}>
-//         {/* Left Section: Problem Statement */}
-//         <Box w="50%" p={4} bg="black" borderRadius="md" boxShadow="md">
-//           <Box textColor="white" fontSize="24px" mb={4} fontWeight="bold">
-//             {problemName || "Problem Name"}
-//           </Box>
-//           <Textarea
-//             value={problemStatement}
-//             onChange={(e) => setProblemStatement(e.target.value)}
-//             height="100%"
-//             placeholder="Problem statement here..."
-//             theme="vs-dark"
-//             fontSize="17px"
-//             textColor="white"
-//             fontFamily="monospace"
-//             resize="none"
-//             minHeight="732px"
-//             isReadOnly // Make it read-only since we want to display the statement
-//           />
-//         </Box>
-
-//         {/* Right Section: Code Editor and Output */}
-//         <VStack w="50%" spacing={4} height="100%">
-//           {/* Code Editor */}
-//           <Box w="100%" bg="black" borderRadius="md" boxShadow="md" flexGrow={1}>
-//             <LanguageSelector language={language} onSelect={onSelect} />
-//             <Editor
-//               options={{
-//                 minimap: { enabled: false },
-//               }}
-//               height="50vh"
-//               theme="vs-dark"
-//               language={language}
-//               defaultValue={CODE_SNIPPETS[language]}
-//               onMount={onMount}
-//               value={value}
-//               onChange={(value) => setValue(value)}
-//             />
-//           </Box>
-
-//           {/* Tabs for Test Cases and Output */}
-//           <Tabs w="100%" height="100%" variant="enclosed" bg="black" borderRadius="md" boxShadow="md">
-//             <TabPanels>
-//               <TabPanel>
-//                 <Box>
-//                   <Output editorRef={editorRef} language={language} />
-//                 </Box>
-//               </TabPanel>
-//               <TabPanel>
-//                 <Box>
-//                   <Output editorRef={editorRef} language={language} />
-//                 </Box>
-//               </TabPanel>
-//             </TabPanels>
-//           </Tabs>
-//         </VStack>
-//       </HStack>
-//     </Box>
-//   );
-// };
-
-// export default CodeEditor;
-
 
 
 
 import { useRef, useState, useEffect } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
-import { Box, VStack, HStack, Tabs, TabPanels, TabPanel } from "@chakra-ui/react";
+import { useAuth0 } from '@auth0/auth0-react';
+import { useNavigate, useLocation } from "react-router-dom";
+import { Box, VStack, HStack, Tabs, TabPanels, TabPanel, Text } from "@chakra-ui/react";
 import { Editor } from "@monaco-editor/react";
 import LanguageSelector from "./LanguageSelector";
 import { CODE_SNIPPETS } from "../constants";
 import Output from "./Output";
 
 const CodeEditor = () => {
+  const { isAuthenticated, isLoading, loginWithRedirect } = useAuth0(); // Auth0 hooks
   const editorRef = useRef();
   const [value, setValue] = useState("");
   const [language, setLanguage] = useState("javascript");
-  const [problemStatement, setProblemStatement] = useState("Enter the problem statement here...");
+  const [problemStatement, setProblemStatement] = useState("Read the problem statement here...");
   const [problemName, setProblemName] = useState("");
-
-  const location = useLocation();
+  const [tabSwitchMessage, setTabSwitchMessage] = useState(""); // For displaying message on tab switching
   const navigate = useNavigate();
+  const location = useLocation();
   const { problem } = location.state || { problem: null };
 
   useEffect(() => {
-    // Check if the page was reloaded, and if so, redirect to the homepage
+    // If the user is not authenticated, redirect to login
+    if (!isLoading && !isAuthenticated) {
+      loginWithRedirect();
+      return; // Prevent further execution if redirecting
+    }
+
+    // Check if the user already reloaded the page
+    const wasReloaded = localStorage.getItem("wasReloaded");
+
+    if (wasReloaded) {
+      // If the page was reloaded, mark it and force redirect if tab switching happens
+      alert("Page reload detected, you will be redirected to homepage on tab switch.");
+      localStorage.removeItem("wasReloaded");
+    }
+
+    // Redirect to homepage if page is reloaded
     const handleBeforeUnload = (event) => {
       event.preventDefault();
-      navigate("/"); // Redirect to homepage if page is reloaded
+      localStorage.setItem("wasReloaded", "true");
     };
 
-    // Only add event listener for reload detection
     window.addEventListener("beforeunload", handleBeforeUnload);
 
     if (problem) {
-      setProblemStatement(problem.statement); // Set the problem statement
-      setProblemName(problem.name); // Set the problem name
+      setProblemStatement(problem.statement);
+      setProblemName(problem.name);
     }
 
     // Request full-screen mode
     const enterFullScreen = () => {
-      const element = document.documentElement; // Full-screen the entire page
+      const element = document.documentElement;
       if (!document.fullscreenElement) {
         element.requestFullscreen().catch((err) => {
           console.error("Error attempting to enable full-screen mode:", err.message);
@@ -380,13 +239,11 @@ const CodeEditor = () => {
       }
     };
 
-    // Trigger full-screen when the component mounts
     enterFullScreen();
 
-    // Listen for full-screen exit event
+    // Handle full-screen exit event
     const handleFullScreenChange = () => {
       if (!document.fullscreenElement) {
-        // User has exited full-screen mode, show alert and redirect
         alert("You exited full-screen mode. Returning to the homepage.");
         navigate("/");
       }
@@ -394,12 +251,26 @@ const CodeEditor = () => {
 
     document.addEventListener("fullscreenchange", handleFullScreenChange);
 
-    // Cleanup event listeners when the component unmounts
+    // Detect tab switching or page visibility change
+    const handleVisibilityChange = () => {
+      if (document.hidden) {
+        setTabSwitchMessage("Tab switching is not allowed while working in the code editor.");
+        alert("Tab switching is not allowed, returning to homepage.");
+        navigate("/"); // Redirect to homepage on tab switch
+      } else {
+        setTabSwitchMessage("");
+      }
+    };
+
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+
+    // Clean up event listeners
     return () => {
       window.removeEventListener("beforeunload", handleBeforeUnload);
       document.removeEventListener("fullscreenchange", handleFullScreenChange);
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
     };
-  }, [problem, navigate]);
+  }, [problem, navigate, isAuthenticated, isLoading, loginWithRedirect]);
 
   const onMount = (editor) => {
     editorRef.current = editor;
@@ -410,6 +281,10 @@ const CodeEditor = () => {
     setLanguage(language);
     setValue(CODE_SNIPPETS[language]);
   };
+
+  if (isLoading) {
+    return <div>Loading...</div>; // Optionally show a loading spinner
+  }
 
   return (
     <Box height="100%" bg="gray.100">
@@ -426,13 +301,13 @@ const CodeEditor = () => {
             fontFamily="monospace"
             minHeight="732px"
             overflow="auto"
-            bg="gray.800" // Darker background for contrast
+            bg="gray.800"
             borderRadius="md"
-            p={4} // Add padding around the text
-            whiteSpace="pre-wrap" // Ensure text wraps correctly and line breaks are maintained
-            style={{ 
-              userSelect: "none", // Prevent text selection
-              lineHeight: "1.6", // Increase line spacing for readability
+            p={4}
+            whiteSpace="pre-wrap"
+            style={{
+              userSelect: "none",
+              lineHeight: "1.6",
             }}
           >
             {problemStatement}
@@ -473,6 +348,13 @@ const CodeEditor = () => {
               </TabPanel>
             </TabPanels>
           </Tabs>
+
+          {/* Tab Switch Message */}
+          {tabSwitchMessage && (
+            <Text color="red" fontSize="18px" fontWeight="bold">
+              {tabSwitchMessage}
+            </Text>
+          )}
         </VStack>
       </HStack>
     </Box>
