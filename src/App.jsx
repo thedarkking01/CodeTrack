@@ -107,6 +107,8 @@ import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import CodeEditor from "./components/CodeEditor";
 import dsaProblems from "../src/components/dsaProblems"; // Import the dsaProblems array
 import Navbar from "./components/Navbar";
+import About from "./components/About";
+import Services from "./components/Services";
 
 
 const Home = () => {
@@ -178,6 +180,8 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/code-editor" element={<CodeEditor />} />
+          <Route path="/About" element={<About/>}/>
+          <Route path="/Services" element={<Services/>} />
         </Routes>
       </Box>
     </Router>

@@ -126,6 +126,7 @@ import {
   Stack,
   useColorModeValue,
 } from '@chakra-ui/react';
+import About from './About';
 
 const Navbar = () => {
   // Destructure Auth0 hooks for authentication
@@ -148,10 +149,10 @@ const Navbar = () => {
 
         {/* Center: Add any additional nav links if needed */}
         <Stack direction={'row'} spacing={4}>
-          <Link href="/about" fontWeight="medium">
+          <Link href="/About" fontWeight="medium">
             About
           </Link>
-          <Link href="/services" fontWeight="medium">
+          <Link href="/Services" fontWeight="medium">
             Services
           </Link>
         </Stack>
