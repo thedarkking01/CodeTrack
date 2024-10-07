@@ -179,7 +179,7 @@
 
 
 
-import { useRef, useState, useEffect } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { useAuth0 } from '@auth0/auth0-react';
 import { useNavigate, useLocation } from "react-router-dom";
 import { Box, VStack, HStack, Tabs, TabPanels, TabPanel, Text } from "@chakra-ui/react";
@@ -187,6 +187,7 @@ import { Editor } from "@monaco-editor/react";
 import LanguageSelector from "./LanguageSelector";
 import { CODE_SNIPPETS } from "../constants";
 import Output from "./Output";
+import RealTimeMonitoring from "./RealTimeMonitoring";
 
 const CodeEditor = () => {
   const { isAuthenticated, isLoading, loginWithRedirect } = useAuth0(); // Auth0 hooks
@@ -201,22 +202,18 @@ const CodeEditor = () => {
   const { problem } = location.state || { problem: null };
 
   useEffect(() => {
-    // If the user is not authenticated, redirect to login
     if (!isLoading && !isAuthenticated) {
       loginWithRedirect();
-      return; // Prevent further execution if redirecting
+      return;
     }
 
-    // Check if the user already reloaded the page
     const wasReloaded = localStorage.getItem("wasReloaded");
 
     if (wasReloaded) {
-      // If the page was reloaded, mark it and force redirect if tab switching happens
       alert("Page reload detected, you will be redirected to homepage on tab switch.");
       localStorage.removeItem("wasReloaded");
     }
 
-    // Redirect to homepage if page is reloaded
     const handleBeforeUnload = (event) => {
       event.preventDefault();
       localStorage.setItem("wasReloaded", "true");
@@ -229,7 +226,6 @@ const CodeEditor = () => {
       setProblemName(problem.name);
     }
 
-    // Request full-screen mode
     const enterFullScreen = () => {
       const element = document.documentElement;
       if (!document.fullscreenElement) {
@@ -241,7 +237,6 @@ const CodeEditor = () => {
 
     enterFullScreen();
 
-    // Handle full-screen exit event
     const handleFullScreenChange = () => {
       if (!document.fullscreenElement) {
         alert("You exited full-screen mode. Returning to the homepage.");
@@ -251,12 +246,11 @@ const CodeEditor = () => {
 
     document.addEventListener("fullscreenchange", handleFullScreenChange);
 
-    // Detect tab switching or page visibility change
     const handleVisibilityChange = () => {
       if (document.hidden) {
         setTabSwitchMessage("Tab switching is not allowed while working in the code editor.");
         alert("Tab switching is not allowed, returning to homepage.");
-        navigate("/"); // Redirect to homepage on tab switch
+        navigate("/");
       } else {
         setTabSwitchMessage("");
       }
@@ -264,7 +258,6 @@ const CodeEditor = () => {
 
     document.addEventListener("visibilitychange", handleVisibilityChange);
 
-    // Clean up event listeners
     return () => {
       window.removeEventListener("beforeunload", handleBeforeUnload);
       document.removeEventListener("fullscreenchange", handleFullScreenChange);
@@ -283,11 +276,16 @@ const CodeEditor = () => {
   };
 
   if (isLoading) {
-    return <div>Loading...</div>; // Optionally show a loading spinner
+    return <div>Loading...</div>; 
   }
 
   return (
     <Box height="100%" bg="gray.100">
+      {/* Position RealTimeMonitoring in a corner */}
+      <Box position="absolute" top="0px" right="0px" zIndex={2} bg="transparent" p={2} borderRadius="md" boxShadow="md" height="0px">
+        <RealTimeMonitoring />
+      </Box>
+
       <HStack spacing={4} height="100%" bg={"black"}>
         {/* Left Section: Problem Statement */}
         <Box w="50%" p={4} bg="black" borderRadius="md" boxShadow="md">
@@ -315,9 +313,9 @@ const CodeEditor = () => {
         </Box>
 
         {/* Right Section: Code Editor and Output */}
-        <VStack w="50%" spacing={4} height="100%">
+        <VStack w="50%" spacing={5} height="100%">
           {/* Code Editor */}
-          <Box w="100%" bg="black" borderRadius="md" boxShadow="md" flexGrow={1}>
+          <Box w="100%" bg="black" borderRadius="md" boxShadow="md" flexGrow={1} px="5px">
             <LanguageSelector language={language} onSelect={onSelect} />
             <Editor
               options={{

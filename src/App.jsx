@@ -102,6 +102,7 @@
 
 
 // src/App.jsx
+
 import { Box, Table, Thead, Tbody, Tr, Th, Td } from "@chakra-ui/react";
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom"; 
 import CodeEditor from "./components/CodeEditor";
@@ -109,28 +110,45 @@ import dsaProblems from "../src/components/dsaProblems"; // Import the dsaProble
 import Navbar from "./components/Navbar";
 import About from "./components/About";
 import Services from "./components/Services";
-
+import RealTimeMonitoring from "./components/RealTimeMonitoring"; // Import the RealTimeMonitoring component
 
 const Home = () => {
   return (
     <>
-    <Navbar/>
+    <Navbar />
     <Box textAlign="center" p={4}>
       
-      <h1>Welcome to the CheapCode</h1>
-      <p>Click the button below to start coding!</p>
-      <Link to="/code-editor">
-        <Box
-          as="button"
-          bg="teal.500"
-          color="white"
-          p={3}
-          borderRadius="md"
-          _hover={{ bg: "teal.600" }}
-        >
-          Go to Code Editor
-        </Box>
-      </Link>
+      <h1>Welcome to CheapCode</h1>
+      <p>Click the button below to start coding or explore real-time monitoring!</p>
+      
+      <Box mt={4}>
+        <Link to="/code-editor">
+          <Box
+            as="button"
+            bg="teal.500"
+            color="white"
+            p={3}
+            borderRadius="md"
+            _hover={{ bg: "teal.600" }}
+            m={2}
+          >
+            Go to Code Editor
+          </Box>
+        </Link>
+        {/* <Link to="/real-time-monitoring">
+          <Box
+            as="button"
+            bg="purple.500"
+            color="white"
+            p={3}
+            borderRadius="md"
+            _hover={{ bg: "purple.600" }}
+            m={2}
+          >
+            Go to Real-Time Monitoring
+          </Box>
+        </Link> */}
+      </Box>
 
       {/* DSA Problems Table */}
       <Box mt={8} overflowX="auto">
@@ -180,14 +198,14 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/code-editor" element={<CodeEditor />} />
-          <Route path="/About" element={<About/>}/>
-          <Route path="/Services" element={<Services/>} />
+          <Route path="/real-time-monitoring" element={<RealTimeMonitoring />} /> {/* Add Real-Time Monitoring route */}
+          <Route path="/about" element={<About />} />
+          <Route path="/services" element={<Services />} />
+          <Route path="/real-time-monitoring" element={<RealTimeMonitoring />} />
         </Routes>
       </Box>
     </Router>
-    
   );
 }
 
 export default App;
-
