@@ -6,7 +6,6 @@ import theme from "./theme.js";
 import { Auth0Provider } from '@auth0/auth0-react';
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-  
     <Auth0Provider
       domain="dev-ohlo1ckp7z4ike02.us.auth0.com"
       clientId="9iP9mTLW4u23dbGu4g9qF7IYdyJJWNRj"  
@@ -15,8 +14,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
       }}
     >
     <ChakraProvider theme={theme}>
-      <App />
+      <App/>
     </ChakraProvider>
-    </Auth0Provider>
-  
+    </Auth0Provider>  
 );

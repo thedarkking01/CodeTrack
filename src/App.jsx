@@ -111,6 +111,7 @@ import Navbar from "./components/Navbar";
 import About from "./components/About";
 import Services from "./components/Services";
 import RealTimeMonitoring from "./components/RealTimeMonitoring"; // Import the RealTimeMonitoring component
+import Footer from "./components/Footer";
 
 const Home = () => {
   return (
@@ -187,6 +188,7 @@ const Home = () => {
         </Table>
       </Box>
     </Box>
+    <Footer/>
     </>
   );
 };

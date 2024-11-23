@@ -1,5 +1,6 @@
 import { Box, Heading, Text, VStack, Image, useColorModeValue, Stack, Icon } from '@chakra-ui/react';
 import { FaCode, FaLaptopCode, FaUserShield } from 'react-icons/fa';
+import Footer from './Footer';
 
 const About = () => {
   const bg = useColorModeValue('gray.50', 'gray.800');
@@ -7,6 +8,7 @@ const About = () => {
   const highlightColor = useColorModeValue('teal.500', 'teal.200');
 
   return (
+    <>
     <Box bg={bg} p={8} minH="100vh">
       <VStack spacing={8} align="center" maxW="6xl" mx="auto" textAlign="center">
         {/* Header Section */}
@@ -66,6 +68,8 @@ const About = () => {
         </Text>
       </VStack>
     </Box>
+    <Footer/>
+    </>
   );
 };
 
