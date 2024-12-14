@@ -1,49 +1,60 @@
-// // import { Box } from "@chakra-ui/react";
-// // import CodeEditor from "./components/CodeEditor";
-
-// // function App() {
-// //   return (
-// //     <Box minH="100vh" bg="#0f0a19" color="gray.500" px={6} py={8}>
-// //       <CodeEditor />
-// //     </Box>
-// //   );
-// // }
-
-// // export default App;
+// // src/App.jsx
 
 // import { Box, Table, Thead, Tbody, Tr, Th, Td } from "@chakra-ui/react";
-// import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom"; // Import Router components
+// import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom"; 
 // import CodeEditor from "./components/CodeEditor";
-
-// // Sample DSA problems
-// const dsaProblems = [
-//   { name: "Two Sum", difficulty: "Easy", topic: "Array" },
-//   { name: "Valid Anagram", difficulty: "Easy", topic: "String" },
-//   { name: "Merge Intervals", difficulty: "Medium", topic: "Array" },
-//   { name: "Longest Substring Without Repeating Characters", difficulty: "Medium", topic: "String" },
-//   { name: "Binary Search", difficulty: "Medium", topic: "Searching" },
-//   { name: "Lowest Common Ancestor of a Binary Search Tree", difficulty: "Medium", topic: "Tree" },
-//   { name: "Maximum Depth of Binary Tree", difficulty: "Easy", topic: "Tree" },
-//   { name: "Rotate Image", difficulty: "Medium", topic: "Array" },
-// ];
-
+// import dsaProblems from "../src/components/dsaProblems"; // Import the dsaProblems array
+// import Navbar from "./components/Navbar";
+// import About from "./components/About";
+// import Services from "./components/Services";
+// import RealTimeMonitoring from "./components/RealTimeMonitoring"; // Import the RealTimeMonitoring component
+// import Footer from "./components/Footer";
+// import RealTimeMonitoring from "./components/RealTimeMonitoring"; 
 // const Home = () => {
+//   const resetAttemptedProblems = () => {
+//     dsaProblems.forEach((problem) => {
+//       localStorage.removeItem(`attempted-${problem.name}`);
+//     });
+//     alert("All attempted problems have been reset!");
+//     window.location.reload(); // Refresh to reflect changes
+//   };
+
 //   return (
+//     <>
+//     <Navbar />
 //     <Box textAlign="center" p={4}>
-//       <h1>Welcome to the Code Playground</h1>
-//       <p>Click the button below to start coding!</p>
-//       <Link to="/code-editor">
-//         <Box
-//           as="button"
-//           bg="teal.500"
-//           color="white"
-//           p={3}
-//           borderRadius="md"
-//           _hover={{ bg: "teal.600" }}
-//         >
-//           Go to Code Editor
-//         </Box>
-//       </Link>
+      
+//       <h1>Welcome to CheapCode</h1>
+//       <p>Click the button below to start coding or explore real-time monitoring!</p>
+      
+//       <Box mt={4}>
+//         <Link to="/code-editor">
+//           <Box
+//             as="button"
+//             bg="teal.500"
+//             color="white"
+//             p={3}
+//             borderRadius="md"
+//             _hover={{ bg: "teal.600" }}
+//             m={2}
+//           >
+//             Go to Code Editor
+//           </Box>
+//         </Link>
+//         {/* <Link to="/real-time-monitoring">
+//           <Box
+//             as="button"
+//             bg="purple.500"
+//             color="white"
+//             p={3}
+//             borderRadius="md"
+//             _hover={{ bg: "purple.600" }}
+//             m={2}
+//           >
+//             Go to Real-Time Monitoring
+//           </Box>
+//         </Link> */}
+//       </Box>
 
 //       {/* DSA Problems Table */}
 //       <Box mt={8} overflowX="auto">
@@ -53,7 +64,7 @@
 //               <Th>Question Name</Th>
 //               <Th>Difficulty Level</Th>
 //               <Th>Topic</Th>
-//               <Th>Action</Th> {/* Add an Action column for the button */}
+//               <Th>Action</Th>
 //             </Tr>
 //           </Thead>
 //           <Tbody>
@@ -63,7 +74,7 @@
 //                 <Td>{problem.difficulty}</Td>
 //                 <Td>{problem.topic}</Td>
 //                 <Td>
-//                   <Link to="/code-editor" state={{ problem: problem.name }}>
+//                   <Link to="/code-editor" state={{ problem }}>
 //                     <Box
 //                       as="button"
 //                       bg="teal.500"
@@ -81,17 +92,36 @@
 //           </Tbody>
 //         </Table>
 //       </Box>
+//       <Box mt={4}>
+//           <Box
+//             as="button"
+//             bg="red.500"
+//             color="white"
+//             p={3}
+//             borderRadius="md"
+//             _hover={{ bg: "red.600" }}
+//             onClick={resetAttemptedProblems}
+//           >
+//             Reset Attempted Questions
+//           </Box>
+//         </Box>
 //     </Box>
+//     <Footer/>
+//     </>
 //   );
 // };
 
 // function App() {
 //   return (
-//     <Router> {/* Wrap your app with Router */}
+//     <Router>
 //       <Box minH="100vh" bg="#0f0a19" color="gray.500" px={6} py={8}>
 //         <Routes>
-//           <Route path="/" element={<Home />} /> {/* Home route */}
-//           <Route path="/code-editor" element={<CodeEditor />} /> {/* CodeEditor route */}
+//           <Route path="/" element={<Home />} />
+//           <Route path="/code-editor" element={<CodeEditor />} />
+//           <Route path="/real-time-monitoring" element={<RealTimeMonitoring />} /> {/* Add Real-Time Monitoring route */}
+//           <Route path="/about" element={<About />} />
+//           <Route path="/services" element={<Services />} />
+//           <Route path="/real-time-monitoring" element={<RealTimeMonitoring />} />
 //         </Routes>
 //       </Box>
 //     </Router>
@@ -101,94 +131,103 @@
 // export default App;
 
 
-// src/App.jsx
-
 import { Box, Table, Thead, Tbody, Tr, Th, Td } from "@chakra-ui/react";
-import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom"; 
+import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import CodeEditor from "./components/CodeEditor";
 import dsaProblems from "../src/components/dsaProblems"; // Import the dsaProblems array
-import Navbar from "./components/Navbar";
+import Navbar from "./components/Navbar"; // Ensure correct import
 import About from "./components/About";
 import Services from "./components/Services";
 import RealTimeMonitoring from "./components/RealTimeMonitoring"; // Import the RealTimeMonitoring component
 import Footer from "./components/Footer";
 
+
 const Home = () => {
+  const resetAttemptedProblems = () => {
+    dsaProblems.forEach((problem) => {
+      localStorage.removeItem(`attempted-${problem.name}`);
+    });
+    alert("All attempted problems have been reset!");
+    window.location.reload(); // Refresh to reflect changes
+  };
+
   return (
     <>
-    <Navbar />
-    <Box textAlign="center" p={4}>
-      
-      <h1>Welcome to CheapCode</h1>
-      <p>Click the button below to start coding or explore real-time monitoring!</p>
-      
-      <Box mt={4}>
-        <Link to="/code-editor">
-          <Box
-            as="button"
-            bg="teal.500"
-            color="white"
-            p={3}
-            borderRadius="md"
-            _hover={{ bg: "teal.600" }}
-            m={2}
-          >
-            Go to Code Editor
-          </Box>
-        </Link>
-        {/* <Link to="/real-time-monitoring">
-          <Box
-            as="button"
-            bg="purple.500"
-            color="white"
-            p={3}
-            borderRadius="md"
-            _hover={{ bg: "purple.600" }}
-            m={2}
-          >
-            Go to Real-Time Monitoring
-          </Box>
-        </Link> */}
-      </Box>
+      <Navbar />
+      <Box textAlign="center" p={4}>
+        <h1>Welcome to CheapCode</h1>
+        <p>
+          Click the button below to start coding or explore real-time
+          monitoring!
+        </p>
 
-      {/* DSA Problems Table */}
-      <Box mt={8} overflowX="auto">
-        <Table variant="simple">
-          <Thead>
-            <Tr>
-              <Th>Question Name</Th>
-              <Th>Difficulty Level</Th>
-              <Th>Topic</Th>
-              <Th>Action</Th>
-            </Tr>
-          </Thead>
-          <Tbody>
-            {dsaProblems.map((problem, index) => (
-              <Tr key={index}>
-                <Td>{problem.name}</Td>
-                <Td>{problem.difficulty}</Td>
-                <Td>{problem.topic}</Td>
-                <Td>
-                  <Link to="/code-editor" state={{ problem }}>
-                    <Box
-                      as="button"
-                      bg="teal.500"
-                      color="white"
-                      p={3}
-                      borderRadius="md"
-                      _hover={{ bg: "teal.600" }}
-                    >
-                      Go to Code Editor
-                    </Box>
-                  </Link>
-                </Td>
+    
+
+        {/* DSA Problems Table */}
+        <Box mt={8} overflowX="auto">
+          <Table variant="simple">
+            <Thead>
+              <Tr>
+                <Th>Question Name</Th>
+                <Th>Difficulty Level</Th>
+                <Th>Topic</Th>
+                <Th>Action</Th>
               </Tr>
-            ))}
-          </Tbody>
-        </Table>
+            </Thead>
+            <Tbody>
+              {dsaProblems.map((problem, index) => {
+                const isAttempted = localStorage.getItem(
+                  `attempted-${problem.name}`
+                ); // Check if attempted
+
+                return (
+                  <Tr key={index}>
+                    <Td>{problem.name}</Td>
+                    <Td>{problem.difficulty}</Td>
+                    <Td>{problem.topic}</Td>
+                    <Td>
+                      {isAttempted ? (
+                        <Box as="span" color="green.500" fontWeight="bold">
+                          Attempted
+                        </Box>
+                      ) : (
+                        <Link to="/code-editor" state={{ problem }}>
+                          <Box
+                            as="button"
+                            bg="teal.500"
+                            color="white"
+                            p={3}
+                            borderRadius="md"
+                            _hover={{ bg: "teal.600" }}
+                          >
+                            Go to Code Editor
+                          </Box>
+                        </Link>
+                      )}
+                    </Td>
+                  </Tr>
+                );
+              })}
+            </Tbody>
+          </Table>
+        </Box>
+
+        {/* Reset Button */}
+        <Box mt={4}>
+          <Box
+            as="button"
+            bg="red.500"
+            color="white"
+            p={3}
+            borderRadius="md"
+            _hover={{ bg: "red.600" }}
+            onClick={resetAttemptedProblems}
+          >
+            Reset Attempted Questions
+          </Box>
+        </Box>
       </Box>
-    </Box>
-    <Footer/>
+      <Footer />
     </>
   );
 };
@@ -200,10 +239,9 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/code-editor" element={<CodeEditor />} />
-          <Route path="/real-time-monitoring" element={<RealTimeMonitoring />} /> {/* Add Real-Time Monitoring route */}
+          <Route path="/real-time-monitoring" element={<RealTimeMonitoring />} />
           <Route path="/about" element={<About />} />
           <Route path="/services" element={<Services />} />
-          <Route path="/real-time-monitoring" element={<RealTimeMonitoring />} />
         </Routes>
       </Box>
     </Router>
