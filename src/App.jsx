@@ -8,7 +8,6 @@ import Services from "./components/Services";
 import RealTimeMonitoring from "./components/RealTimeMonitoring"; // Import the RealTimeMonitoring component
 import Footer from "./components/Footer";
 
-
 const Home = () => {
   const resetAttemptedProblems = () => {
     dsaProblems.forEach((problem) => {
@@ -28,8 +27,7 @@ const Home = () => {
           monitoring!
         </p>
 
-    
-
+  
         {/* DSA Problems Table */}
         <Box mt={8} overflowX="auto">
           <Table variant="simple">

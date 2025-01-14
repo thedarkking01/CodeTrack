@@ -12,7 +12,6 @@ const Footer = () => {
         <Text textAlign="center" fontSize="sm" maxW="600px">
           A secure and real-time coding platform for practicing and solving coding challenges across multiple languages, integrated with Piston API, OpenCV, and MongoDB for efficient user management and monitoring.
         </Text>
-
         <Divider borderColor="gray.600" />
 
         {/* Quick Links */}
@@ -31,8 +30,8 @@ const Footer = () => {
           </Link>
         </HStack>
 
-        <Divider borderColor="gray.600" />
 
+        <Divider borderColor="gray.600" />
         {/* Copyright */}
         <Text fontSize="xs" color="gray.400">
           © {new Date().getFullYear()} CheapCode. All rights reserved.
