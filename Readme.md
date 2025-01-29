@@ -37,7 +37,7 @@ An advanced **multi-language online code editor** with real-time execution, secu
 | Technology    | Purpose |
 
 | **React.js** | Frontend UI |
-| **Next.js**  | Server-side rendering |
+| Server-side rendering |
 | **Node.js & Express.js** | Backend API |
 | **MongoDB**  | Database for user submissions |
 | **Piston API** | Code execution engine |
