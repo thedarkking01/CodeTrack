@@ -5,7 +5,8 @@ import cors from "cors";
 const app = express();
 mongoose.connect(
     // "mongodb+srv://harshalguptadev:harshal10@clusteride.cszbp.mongodb.net"
-    "mongodb+srv://sourabhsinghbais52:ppVijAwmjNBOwOO9@clustercodeeditor.qh9og.mongodb.net"
+    // "mongodb+srv://sourabhsinghbais52:ppVijAwmjNBOwOO9@clustercodeeditor.qh9og.mongodb.net"
+    "mongodb+srv://sourabhsinghbais52:ppVijAwmjNBOwOO9@codeeditor-cluster.qh9og.mongodb.net/"
   )
   .then(() => console.log("Connected to MongoDB"))
   .catch((err) => console.error("MongoDB connection error:", err));
@@ -22,7 +23,7 @@ app.post("/api/save-code", async (req, res) => {
   if (!language || !code || !problemName) {
     return res.status(400).json({ message: "Language, code, and problem name are required" });
   }
-
+  
   try {
     const newCode = new Code({ language, code, problemName });
     await newCode.save();

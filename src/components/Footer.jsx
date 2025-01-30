@@ -7,7 +7,7 @@ const Footer = () => {
       <VStack spacing={4}>
         {/* Logo and Description */}
           <Link href="/" fontWeight="bold" fontSize="xl" color='teal'>
-            CheapCode
+            CodeTrack
           </Link>
         <Text textAlign="center" fontSize="sm" maxW="600px">
           A secure and real-time coding platform for practicing and solving coding challenges across multiple languages, integrated with Piston API, OpenCV, and MongoDB for efficient user management and monitoring.
@@ -34,7 +34,7 @@ const Footer = () => {
         <Divider borderColor="gray.600" />
         {/* Copyright */}
         <Text fontSize="xs" color="gray.400">
-          © {new Date().getFullYear()} CheapCode. All rights reserved.
+          © {new Date().getFullYear()} CodeTrack. All rights reserved.
         </Text>
       </VStack>
     </Box>

@@ -143,7 +143,7 @@ const Navbar = () => {
         {/* Left Section: Logo or Brand */}
         <Box>
           <Link href="/" fontWeight="bold" fontSize="xl" color='teal'>
-            CheapCode
+            CodeTrack
           </Link>
         </Box>
 

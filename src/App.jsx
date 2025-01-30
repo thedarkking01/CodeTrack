@@ -21,7 +21,7 @@ const Home = () => {
     <>
       <Navbar />
       <Box textAlign="center" p={4}>
-        <h1>Welcome to CheapCode</h1>
+        <h1>Welcome to CodeTrack</h1>
         <p>
           Click the button below to start coding or explore real-time
           monitoring!
