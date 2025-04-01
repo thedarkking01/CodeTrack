@@ -23,6 +23,13 @@ An advanced **multi-language online code editor** with real-time execution, secu
 
 ---
 
+### 👽 Project Workflow
+
+![diagram](https://github.com/user-attachments/assets/a6441e30-ade2-4b15-bebc-840bfd8088e2)
+
+
+---
+
 ## 🎯 Use Cases  
 
 - **🎓 Educational Institutions** – Online assessments, coding exams, and assignments.  
